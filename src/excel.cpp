@@ -57,15 +57,11 @@ void PlaceDataInSheet(lxw_workbook* book,
 
 void HandleMonthlyWebdeskConnections(lxw_workbook* book, int month) {
   // Submit a request to get all connections in the last month
-  std::string connection_request = "http://gobntpvxencdc1.corp.dir.ameren.com/"
-              "Citrix/Monitor/Odata/v3/Data/Connections?$expand=Session,Session/User,Session/Machine"
-              "&$filter=(startswith(ConnectedViaIPAddress,'10.200.226') or startswith(ConnectedViaIPAddress,'10.191.226'))"
-              " and month(Session/StartDate) eq " + std::to_string(month) 
-              + " sub 1&$orderby=Session/StartDate asc&$select=Session/User/UserName,Session/StartDate,Session/EndDate,ClientName,ConnectedViaIPAddress";
+  std::string connection_request = "";
   char* connection_info = convenience::GetData(
                                  connection_request,
                                  std::make_tuple(std::string("NTLM"), 
-                                       std::string("e141674:Devster636_")));
+                                       std::string(""))); // Deleted for security purposes
  
   // Parse the character pointer into json data so that we can manipulate
   rapidjson::Document doc = json::GetJsonData(connection_info);
@@ -77,14 +73,11 @@ void HandleMonthlyWebdeskConnections(lxw_workbook* book, int month) {
 
 void HandleMonthlyWebdeskSessions(lxw_workbook* book, int month) {
   // Submit a request to get all sessions in the last month
-  std::string session_request = "http://gobntpvxencdc1.corp.dir.ameren.com/"
-              "Citrix/Monitor/Odata/v3/Data/Sessions?$expand=User,Connections&$filter=month(StartDate) eq "
-              + std::to_string(month) + " sub 1 and Connections/any(c: c/ConnectedViaIPAddress eq '10.200.226.67')"
-              "&$orderby=StartDate asc&$select=User/UserName,StartDate,EndDate,Connections/ClientName,Connections/ConnectedViaIPAddress";
+  std::string session_request = "";
   char* session_info = convenience::GetData(
                                  session_request,
                                  std::make_tuple(std::string("NTLM"), 
-                                       std::string("e141674:Devster636_")));
+                                       std::string(""))); // Deleted for security purposes
 
   // Parse the character pointer into json data so that we can manipulate
   rapidjson::Document doc = json::GetJsonData(session_info);
@@ -95,14 +88,11 @@ void HandleMonthlyWebdeskSessions(lxw_workbook* book, int month) {
 }
 
 void HandleMonthlyVPNConnections(lxw_workbook* book, int month) {
-  std::string connection_request = "https://solarwinds.ameren.com:17778/"
-                                   "SolarWinds/InformationService/v3/Json/Query?"
-                                   "query=SELECT+UserName+,+ConnectedTime+,+DisconnectedTime+"
-                                   "FROM+Orion.ASA.RemoteAccessSessions+ORDER+BY+ConnectedTime";
+  std::string connection_request = "";
   char* connection_info = convenience::GetData(
                                connection_request, 
                                std::make_tuple(std::string("BASIC"), 
-                                       std::string("e141674:Devster636_")));
+                                       std::string(""))); // Deleted for security purposes
  
   // Parse the character pointer into json data so that we can manipulate
   rapidjson::Document doc = json::GetJsonData(connection_info);
