@@ -6,9 +6,6 @@
 
 namespace timing {
 
-// Locally bring std::chrono into namespace for easier access
-using namespace std::chrono;
-
 /**
  * Struct to easily keep track of the year, 
  * month and day in integer form. It also 
@@ -24,6 +21,7 @@ struct year_month_day {
       year(year), month(month), day(day) { }
 
   year_month_day(std::chrono::system_clock::time_point point);
+  
   std::chrono::system_clock::time_point to_time_point();
 };
 
@@ -43,6 +41,6 @@ std::chrono::system_clock::time_point get_next_timepoint(std::chrono::system_clo
  */
 year_month_day get_next_datapoint();
 
-}; // namespace time
+} // End of timing namespace
 
 #endif
