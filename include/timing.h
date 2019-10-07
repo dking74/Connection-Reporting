@@ -23,8 +23,8 @@ struct year_month_day {
   year_month_day(int year, int month, int day): 
       year(year), month(month), day(day) { }
 
-  year_month_day(system_clock::time_point point);
-  system_clock::time_point to_time_point();
+  year_month_day(std::chrono::system_clock::time_point point);
+  std::chrono::system_clock::time_point to_time_point();
 };
 
 /**
@@ -36,7 +36,7 @@ struct year_month_day {
  * @rtype: std::chrono::system_clock::time_point
  *       : The time point after a month increase
  */
-system_clock::time_point get_next_timepoint(system_clock::time_point current);
+std::chrono::system_clock::time_point get_next_timepoint(std::chrono::system_clock::time_point current);
 
 /**
  * Function to get the next year_month_day from the current point in time
